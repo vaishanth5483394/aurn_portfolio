@@ -1,0 +1,39 @@
+@import '@fontsource/instrument-serif/400.css';
+@import '@fontsource/instrument-serif/400-italic.css';
+@import '@fontsource-variable/inter-tight';
+@import '@fontsource/jetbrains-mono/400.css';
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+html { scroll-behavior: smooth; scroll-padding-top: 4.5rem; background: #080808; }
+body { @apply bg-ink text-white font-sans antialiased; margin: 0; overflow-x: hidden; }
+::selection { background: #00C6C8; color: #080808; }
+:focus-visible { outline: 2px solid #00C6C8; outline-offset: 3px; }
+button { font: inherit; }
+
+/* film grain */
+.grain::after {
+  content: ''; position: fixed; inset: 0; pointer-events: none; z-index: 90; opacity: .06; mix-blend-mode: overlay;
+  background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='160' height='160'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='2' stitchTiles='stitch'/></filter><rect width='100%' height='100%' filter='url(%23n)'/></svg>");
+}
+
+.reveal { opacity: 0; transform: translateY(28px); transition: opacity .9s cubic-bezier(.2,.7,.2,1), transform .9s cubic-bezier(.2,.7,.2,1); transition-delay: var(--d, 0ms); }
+.reveal.in { opacity: 1; transform: none; }
+
+.eyebrow { @apply font-mono text-[11px] uppercase tracking-wide2 text-teal; }
+.hairline { border-color: rgba(255,255,255,.12); }
+
+.btn { @apply inline-flex items-center gap-3 border px-6 py-3.5 font-mono text-[12px] uppercase tracking-wide2 transition-colors duration-300; }
+.btn-solid { @apply bg-white text-ink border-white hover:bg-teal hover:border-teal; }
+.btn-ghost { @apply border-white/30 text-white hover:border-teal hover:text-teal; }
+
+.scrollcue { animation: cue 2.2s ease-in-out infinite; transform-origin: top; }
+@keyframes cue { 0% { transform: scaleY(0); } 50% { transform: scaleY(1); } 100% { transform: scaleY(1); opacity: 0; } }
+
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  .reveal { opacity: 1; transform: none; transition: none; }
+  .scrollcue { animation: none; }
+  *, *::before, *::after { transition-duration: .01ms !important; animation-duration: .01ms !important; }
+}
